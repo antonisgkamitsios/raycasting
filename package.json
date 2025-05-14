@@ -1,0 +1,16 @@
+{
+  "name": "raycasting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=iife --target=es6",
+    "dev": "esbuild src/index.ts --bundle --outfile=dist/index.js  --watch --sourcemap"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
