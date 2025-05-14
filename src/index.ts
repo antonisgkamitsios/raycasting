@@ -152,12 +152,8 @@ function renderScene(ctx: CanvasRenderingContext2D, player: Player, scene: Scene
 
       const stripHeight = ctx.canvas.height / v.dot(d);
 
-      // const t = 1 - p.sub(player.position).length() / FAR_CLIPPING_PLANE;
+      // const alpha = 1 - p.sub(player.position).length() / FAR_CLIPPING_PLANE;
       const otherT = 1 / v.dot(d);
-
-      // const color = scene.getColor(c);
-      // ctx.fillStyle = color.mul(otherT).toString();
-      // ctx.fillRect(x * stripWidth, (ctx.canvas.height - stripHeight) * 0.5, stripWidth, stripHeight);
 
       const t = p.sub(c);
       let u = 0;
@@ -178,6 +174,12 @@ function renderScene(ctx: CanvasRenderingContext2D, player: Player, scene: Scene
         stripWidth,
         stripHeight
       );
+
+      // const color = scene.getColor(c);
+      // ctx.fillStyle = color.mul(otherT).toString();
+      
+      ctx.fillStyle = `rgba(0,0,0,${1-otherT})`;
+      ctx.fillRect(x * stripWidth, (ctx.canvas.height - stripHeight) * 0.5, stripWidth, stripHeight);
     }
   }
 }
