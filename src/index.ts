@@ -99,8 +99,10 @@ function renderMinimap(ctx: CanvasRenderingContext2D, player: Player, position: 
 
   for (let y = 0; y < gridSize.y; y++) {
     for (let x = 0; x < gridSize.x; x++) {
-      if (scene.isWall(new Vector2(x, y))) {
-        ctx.fillStyle = '#303030';
+      const c = new Vector2(x, y);
+      if (scene.isWall(c)) {
+        const color = scene.getColor(c);
+        ctx.fillStyle = color.toString();
         ctx.fillRect(x, y, 1, 1);
       }
     }
@@ -141,7 +143,11 @@ function renderScene(ctx: CanvasRenderingContext2D, player: Player, scene: Scene
       v.dot(d);
       const t = 1 - p.sub(player.position).length() / FAR_CLIPPING_PLANE;
       const stripHeight = ctx.canvas.height / v.dot(d);
-      ctx.fillStyle = `rgba(${255 * t}, 0, 0, 1)`;
+      const otherT = 1/v.dot(d)
+      // console.log(otherT);
+      
+      const color = scene.getColor(c);
+      ctx.fillStyle = color.mul(otherT).toString();
       ctx.fillRect(x * stripWidth, (ctx.canvas.height - stripHeight) * 0.5, stripWidth, stripHeight);
       // ctx.fillRect(x * stripWidth, 0, stripWidth, ctx.canvas.height);
     }
@@ -160,9 +166,9 @@ function renderGame(ctx: CanvasRenderingContext2D, player: Player, scene: Scene)
 }
 
 const scene: Scene = new Scene([
-  [0, 0, 1, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 1, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 0, 0, 0, 0, 0],
+  [0, 0, 1, 2, 0, 0, 0, 0, 0],
+  [0, 0, 0, 3, 0, 0, 0, 0, 0],
+  [0, 2, 5, 4, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
